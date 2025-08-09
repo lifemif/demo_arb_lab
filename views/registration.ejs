@@ -1,13 +1,46 @@
-<!-- Wappler include head-page="layouts/main" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="registration" appConnect="local" -->
-<meta name="ac:route" content="/registration">
-<div class="container wappler-block pt-5 pb-5">
-    <div class="row">
-        <div class="text-center col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3 d-flex">
-            <div class="d-block p-4 bg-light">
-                <h4>Fancy display heading<br><small class="text-muted">With faded secondary text</small></h4>
-                <p>A nice paragraph</p>
-                <button class="btn btn-primary">Button</button>
+<dmx-notifications id="notifies1"></dmx-notifications><!-- Wappler include head-page="layouts/main" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="registration" appConnect="local" components="{dmxBootstrap5Modal:{},dmxNotifications:{},dmxBrowser:{},dmxValidator:{}}" -->
+<div is="dmx-browser" id="browser1"></div>
+<div class="modal bg-light" id="modal1" is="dmx-bs5-modal" tabindex="-1" show="true" nocloseonclick="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-start">
+                <img src="/assets/images/logo2-no-bg-preview (carve_photos)-no-bg-preview (carve.photos).png" width="60" height="50">
+                <h4 class="modal-title">
+                    Регистрация</h4>
+            </div>
+            <div class="modal-body">
+                <form is="dmx-serverconnect-form" id="sc_registration" method="post" action="/api/users/new_user" dmx-generator="bootstrap5" dmx-form-type="vertical" dmx-on:error="notifies1.danger('Ошибка')" dmx-on:success="browser1.goto('/')">
+                    <div class="form-group mb-3">
+                        <label for="inp_login" class="col-form-label-sm">Логин</label>
+                        <input type="text" class="form-control form-control-sm" id="inp_login" name="login" aria-describedby="inp_login_help" required="" data-msg-required="Обязательное поле!!!">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="inp_password" class="col-form-label-sm">Пароль</label>
+                        <input type="password" class="form-control form-control-sm" id="inp_password" name="password" aria-describedby="inp_password_help" required="" data-msg-required="Обязательное поле!!!">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="inp_email" class="col-form-label-sm">Email</label>
+                        <input type="email" class="form-control form-control-sm" id="inp_email" name="email" aria-describedby="inp_email_help" required="" data-msg-required="Обязательное поле!!!" data-rule-email="">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="inp_tip_svazi" class="col-form-label-sm">Тип связи</label>
+                        <select id="inp_tip_svazi" class="form-select form-select-sm" name="tip_svazi" required="" data-msg-required="Обязательное поле!!!">
+                            <option selected="" value=""></option>
+                            <option value="Ватсап">Ватсап</option>
+                            <option value="Телеграм">Телеграм</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="inp_telefon" class="col-form-label-sm">Телефон</label>
+                        <input type="text" class="form-control form-control-sm" id="inp_telefon" name="telefon" aria-describedby="inp_telefon_help" required="" data-msg-required="Обязательное поле!!!">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="/" class="btn btn-sm">Назад</a>
+                <button type="button" class="btn btn-primary btn-sm" dmx-on:click="sc_registration.submit()">Регистрация</button>
             </div>
         </div>
     </div>
 </div>
+<meta name="ac:route" content="/registration">

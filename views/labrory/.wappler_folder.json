@@ -1,0 +1,30 @@
+{
+  "labrory.ejs": {
+    "layoutPage": "laubrory",
+    "description": ""
+  },
+  "bukmaker.ejs": {
+    "layoutPage": "laubrory",
+    "description": ""
+  },
+  "valuta.ejs": {
+    "layoutPage": "laubrory",
+    "description": ""
+  },
+  "vidsporta.ejs": {
+    "layoutPage": "laubrory",
+    "description": ""
+  },
+  "line.ejs": {
+    "layoutPage": "laubrory",
+    "description": ""
+  },
+  "vidstavki.ejs": {
+    "layoutPage": "laubrory",
+    "description": ""
+  },
+  "stategy.ejs": {
+    "layoutPage": "laubrory",
+    "description": ""
+  }
+}

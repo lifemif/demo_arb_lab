@@ -15,6 +15,41 @@
       "path": "/registration",
       "page": "registration",
       "layout": "main"
+    },
+    {
+      "path": "/labrory/labrory",
+      "page": "labrory/labrory",
+      "layout": "laubrory"
+    },
+    {
+      "path": "/labrory/bukmaker",
+      "page": "labrory/bukmaker",
+      "layout": "laubrory"
+    },
+    {
+      "path": "/labrory/valuta",
+      "page": "labrory/valuta",
+      "layout": "laubrory"
+    },
+    {
+      "path": "/labrory/vidsporta",
+      "page": "labrory/vidsporta",
+      "layout": "laubrory"
+    },
+    {
+      "path": "/labrory/line",
+      "page": "labrory/line",
+      "layout": "laubrory"
+    },
+    {
+      "path": "/labrory/vidstavki",
+      "page": "labrory/vidstavki",
+      "layout": "laubrory"
+    },
+    {
+      "path": "/labrory/stategy",
+      "page": "labrory/stategy",
+      "layout": "laubrory"
     }
   ]
 }

@@ -1,5 +1,8 @@
 {
   "sistem.ejs": {
     "description": "sistem"
+  },
+  "laubrory.ejs": {
+    "description": ""
   }
 }

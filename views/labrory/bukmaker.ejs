@@ -1,0 +1,37 @@
+<!-- Wappler include head-page="layouts/laubrory" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="bukmaker" appConnect="local" components="{dmxBrowser:{},dmxBootstrap5Offcanvas:{}}" -->
+<meta name="ac:route" content="/labrory/bukmaker">
+<header>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <button id="btn1" class="btn" data-bs-toggle="offcanvas" data-bs-target="#meny">Меню</button>
+            </div>
+            <div class="col text-xxl-center">
+                <h5>Букмекеры</h5>
+            </div>
+            <div class="col text-end">
+                <button id="btn2" class="btn text-end">Скачать EXСEL</button>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="offcanvas offcanvas-start" id="meny" is="dmx-bs5-offcanvas" tabindex="-1">
+    <div class="offcanvas-header">
+        <h3 class="offcanvas-title">Меню раздела</h3>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="d-flex flex-column justify-content-center">
+            <h5 class="mt-2 mb-2 ms-3 cur" dmx-on:click="browser1.goto('/labrory/bukmaker')" id="bukmaker">Букмекеры</h5>
+            <h5 class="mt-2 mb-2 ms-3 cur" dmx-on:click="browser1.goto('/labrory/valuta')" id="valuta">Валюта</h5>
+            <h5 class="mt-2 mb-2 ms-3 cur" dmx-on:click="browser1.goto('/labrory/vidsporta')" id="vid_sporta">Вид спорта</h5>
+            <h5 class="mt-2 mb-2 ms-3 cur" dmx-on:click="browser1.goto('/labrory/line')" id="line">Букмекерская линия</h5>
+            <h5 class="mt-2 mb-2 ms-3 cur" dmx-on:click="browser1.goto('/labrory/vidstavki')" id="vid_stavki">Вид ставки</h5>
+            <h5 class="mt-2 mb-2 ms-3 cur" dmx-on:click="browser1.goto('/labrory/stategy')" id="strategy">Стратегии</h5>
+        </div>
+    </div>
+</div><!-- Wappler include head-page="layouts/laubrory" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="labrory" appConnect="local" components="{dmxBootstrap5Navigation:{},dmxBootstrap5Offcanvas:{},dmxBrowser:{}}" -->
+<div is="dmx-browser" id="browser1"></div>
+
+
+<meta name="ac:route" content="/labrory/labrory">
