@@ -1,2 +1,29 @@
-<!-- Wappler include head-page="layouts/main" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="index" appConnect="local" bootstrap_icons="local" -->
+<!-- Wappler include head-page="layouts/main" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="index" appConnect="local" bootstrap_icons="local" components="{dmxBootstrap5Modal:{},dmxBrowser:{},dmxNotifications:{}}" -->
+
+<dmx-notifications id="notifies1"></dmx-notifications>
+<div is="dmx-browser" id="browser1"></div>
+<dmx-serverconnect id="sc_identifiction" url="/api/users/identification" noload></dmx-serverconnect>
+<div class="modal bg-white" id="modal1" is="dmx-bs5-modal" tabindex="-1" nocloseonclick="true" show="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img src="/assets/images/logo2-no-bg-preview (carve_photos)-no-bg-preview (carve.photos).png" width="50" height="40" class="me-3">
+                <h5 class="modal-title fw-bolder lh-lg">DEMO ARB-LAB</h5>
+            </div>
+            <div class="modal-body">
+                <form id="form_login" is="dmx-serverconnect-form" method="post" action="/api/users/login" dmx-on:error="notifies1.danger('Нет входа')" dmx-on:unauthorized="notifies1.warning('Ты не тот')" dmx-on:success="browser1.goto('/sistem/dashbord')">
+                    <h6>Логин</h6>
+                    <input id="login" name="login" type="text" class="form-control form-control-sm">
+                    <h6>Пароль</h6>
+
+                    <input id="pass" name="pass" type="password" class="form-control form-control-sm">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="/registration" class="btn btn-sm">Регистрация</a>
+                <button type="button" class="btn btn-primary btn-sm" dmx-on:click="sc_identifiction.load({});form_login.submit()">Вход</button>
+            </div>
+        </div>
+    </div>
+</div>
 <meta name="ac:route" content="/">

@@ -1,0 +1,35 @@
+{
+  "meta": {
+    "options": {
+      "linkedFile": "/views/index.ejs",
+      "linkedForm": "form_login"
+    },
+    "$_POST": [
+      {
+        "type": "text",
+        "fieldName": "login",
+        "name": "login"
+      },
+      {
+        "type": "text",
+        "fieldName": "pass",
+        "name": "pass"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "identity",
+      "module": "auth",
+      "action": "login",
+      "options": {
+        "provider": "security",
+        "remember": 1,
+        "username": "{{$_POST.login}}",
+        "password": "{{$_POST.pass}}"
+      },
+      "output": true,
+      "meta": []
+    }
+  }
+}

@@ -5,6 +5,16 @@
       "page": "index",
       "routeType": "page",
       "layout": "main"
+    },
+    {
+      "path": "/sistem/dashbord",
+      "page": "sistem/dashbord",
+      "layout": "sistem"
+    },
+    {
+      "path": "/registration",
+      "page": "registration",
+      "layout": "main"
     }
   ]
 }
