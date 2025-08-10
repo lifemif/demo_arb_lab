@@ -1,0 +1,121 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "query",
+      "module": "dbconnector",
+      "action": "select",
+      "options": {
+        "connection": "db-arbik",
+        "sql": {
+          "type": "SELECT",
+          "columns": [
+            {
+              "table": "lib_valuta",
+              "column": "id"
+            },
+            {
+              "table": "lib_valuta",
+              "column": "user_uuid"
+            },
+            {
+              "table": "lib_valuta",
+              "column": "name_valuta"
+            },
+            {
+              "table": "lib_valuta",
+              "column": "name_valuta_sis"
+            },
+            {
+              "table": "lib_valuta",
+              "column": "sector"
+            }
+          ],
+          "table": {
+            "name": "lib_valuta"
+          },
+          "primary": "id",
+          "joins": [],
+          "wheres": {
+            "condition": "AND",
+            "rules": [
+              {
+                "id": "lib_valuta.user_uuid",
+                "field": "lib_valuta.user_uuid",
+                "type": "string",
+                "operator": "equal",
+                "value": "{{identity}}",
+                "data": {
+                  "table": "lib_valuta",
+                  "column": "user_uuid",
+                  "type": "text",
+                  "columnObj": {
+                    "type": "string",
+                    "maxLength": 255,
+                    "primary": false,
+                    "nullable": true,
+                    "name": "user_uuid"
+                  }
+                },
+                "operation": "="
+              }
+            ],
+            "conditional": null,
+            "valid": true
+          },
+          "orders": [
+            {
+              "table": "lib_valuta",
+              "column": "sector",
+              "direction": "ASC"
+            }
+          ],
+          "query": "SELECT id, user_uuid, name_valuta, name_valuta_sis, sector\nFROM lib_valuta\nWHERE user_uuid = :P1 /* {{identity}} */\nORDER BY sector ASC",
+          "params": [
+            {
+              "operator": "equal",
+              "type": "expression",
+              "name": ":P1",
+              "value": "{{identity}}"
+            }
+          ]
+        }
+      },
+      "output": true,
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "text",
+          "name": "user_uuid"
+        },
+        {
+          "type": "text",
+          "name": "name_valuta"
+        },
+        {
+          "type": "text",
+          "name": "name_valuta_sis"
+        },
+        {
+          "type": "number",
+          "name": "sector"
+        }
+      ],
+      "outputType": "array"
+    }
+  }
+}

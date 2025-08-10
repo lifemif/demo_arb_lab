@@ -1,5 +1,5 @@
-<!-- Wappler include head-page="layouts/laubrory" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="bukmaker" appConnect="local" components="{dmxBrowser:{},dmxBootstrap5Offcanvas:{}}" -->
-<meta name="ac:route" content="/labrory/bukmaker">
+<dmx-serverconnect id="sc_bukmaker" url="/api/laybrory/bukmaker/get_bukmaker"></dmx-serverconnect>
+<dmx-serverconnect id="sc_valuta" url="/api/laybrory/bukmaker/get_valuta"></dmx-serverconnect>
 <header>
     <div class="container-fluid">
         <div class="row">
@@ -9,12 +9,48 @@
             <div class="col text-xxl-center">
                 <h5>Букмекеры</h5>
             </div>
-            <div class="col text-end">
-                <button id="btn2" class="btn text-end">Скачать EXСEL</button>
+            <div class="col text-center">
+                <p class="text-center">Количесво позиций: ({{sc_bukmaker.data.query.count()}})</p>
             </div>
         </div>
     </div>
-</header>
+</header><!-- Wappler include head-page="layouts/laubrory" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="bukmaker" appConnect="local" components="{dmxBrowser:{},dmxBootstrap5Offcanvas:{},dmxBootstrap5TableGenerator:{},dmxFormatter:{},dmxBootstrap5Modal:{},dmxNotifications:{}}" -->
+
+
+
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col col-xxl">
+                <button id="btn2" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal_new_bukmaker">Создать</button>
+            </div>
+        </div>
+        <div class="row" is="dmx-repeat" id="repeat1" dmx-bind:repeat="sc_bukmaker.data.query">
+            <div class="col-xxl-auto col-6 col-sm-6 col-md-auto col-lg-auto col-xl-auto">
+                <div class="d-block">
+                    <h5 class="mark text-xxl-center">Букмекер</h5>
+                    <h6>Номер в системе: {{sorting}}</h6>
+                    <h6>Наименование: {{bukmaker}}</h6>
+                    <h6>Валюта: {{valuta}}</h6>
+                    <form is="dmx-serverconnect-form" id="fr_del_buk" method="post" action="/api/laybrory/bukmaker/deleted_bukmaker" dmx-generator="bootstrap5" dmx-form-type="horizontal" dmx-on:error="notifies1.danger('Ошибка')" dmx-on:success="sc_bukmaker.load();notifies1.success('Успешно')">
+
+                        <div class="form-group mb-3 row" dmx-show="">
+                            <label for="inp_ide" class="col-sm-2 col-form-label">Ide</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="inp_ide" name="ide" aria-describedby="inp_ide_help" placeholder="Enter Ide" dmx-bind:value="id">
+                            </div>
+                        </div>
+                        <button id="btn3" class="btn w-100 btn-danger btn-sm" dmx-on:click="fr_del_buk.submit()">Удалить</button>
+                    </form>
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+</section>
 <div class="offcanvas offcanvas-start" id="meny" is="dmx-bs5-offcanvas" tabindex="-1">
     <div class="offcanvas-header">
         <h3 class="offcanvas-title">Меню раздела</h3>
@@ -30,8 +66,45 @@
             <h5 class="mt-2 mb-2 ms-3 cur" dmx-on:click="browser1.goto('/labrory/stategy')" id="strategy">Стратегии</h5>
         </div>
     </div>
-</div><!-- Wappler include head-page="layouts/laubrory" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="labrory" appConnect="local" components="{dmxBootstrap5Navigation:{},dmxBootstrap5Offcanvas:{},dmxBrowser:{}}" -->
+</div>
+<div class="modal" id="modal_new_bukmaker" is="dmx-bs5-modal" tabindex="-1" nocloseonclick="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-light bg-primary">
+                <img src="/assets/images/logo2-no-bg-preview (carve_photos)-no-bg-preview (carve.photos).png" width="50" height="40" class="me-xxl-3">
+                <h6 class="modal-title">Новый букмакер</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form is="dmx-serverconnect-form" id="fr_new_bukmaker" method="post" action="/api/laybrory/bukmaker/new_bukmaker" dmx-generator="bootstrap5" dmx-form-type="vertical" dmx-on:error="modal_new_bukmaker.hide();fr_new_bukmaker.reset();notifies1.danger('Ошибка')" dmx-on:success="fr_new_bukmaker.reset();modal_new_bukmaker.hide();sc_bukmaker.load();notifies1.success('Успушно')">
+                    <div class="form-group mb-3">
+                        <label for="inp_bukmaker" class="col-form-label-sm">Букмекер</label>
+                        <input type="text" class="form-control form-control-sm" id="inp_bukmaker" name="bukmaker" aria-describedby="inp_bukmaker_help">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="inp_valuta">Валюта</label>
+                        <select id="inp_valuta" class="form-select form-select-sm" name="valuta" dmx-bind:options="sc_valuta.data.query" optiontext="name_valuta" optionvalue="name_valuta_sis">
+                            <option selected="" value=""></option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="inp_sorting">Сортировка</label>
+                        <input type="number" class="form-control form-control-sm" id="inp_sorting" name="sorting" aria-describedby="inp_sorting_help">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-primary btn-sm" dmx-on:click="fr_new_bukmaker.submit()">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
+<dmx-notifications id="notifies1"></dmx-notifications>
+<meta name="ac:route" content="/labrory/bukmaker">
+
+<!-- Wappler include head-page="layouts/laubrory" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="labrory" appConnect="local" components="{dmxBootstrap5Navigation:{},dmxBootstrap5Offcanvas:{},dmxBrowser:{}}" -->
 <div is="dmx-browser" id="browser1"></div>
 
 
-<meta name="ac:route" content="/labrory/labrory">
+<meta name="ac:route" content="/labrory/bukmaker">

@@ -1,6 +1,5 @@
-<!-- Wappler include head-page="layouts/laubrory" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="line" appConnect="local" components="{dmxBrowser:{},dmxBootstrap5Offcanvas:{}}" -->
-<meta name="ac:route" content="/labrory/line">
-
+<dmx-serverconnect id="sc_line" url="/api/laybrory/line/get_line"></dmx-serverconnect><!-- Wappler include head-page="layouts/laubrory" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="line" appConnect="local" components="{dmxBrowser:{},dmxBootstrap5Offcanvas:{},dmxBootstrap5TableGenerator:{},dmxFormatter:{},dmxBootstrap5Modal:{}}" -->
+<dmx-serverconnect id="sc_vid_sporta" url="/api/laybrory/line/get_vid_sporta"></dmx-serverconnect>
 <header>
     <div class="container-fluid">
         <div class="row">
@@ -10,12 +9,41 @@
             <div class="col text-xxl-center">
                 <h5>Букмекерская линии</h5>
             </div>
-            <div class="col text-end">
-                <button id="btn2" class="btn text-end">Скачать EXСEL</button>
+            <div class="col text-start">
+                <p>Количество позиций: ({{sc_line.data.query.count()}})</p>
             </div>
         </div>
     </div>
 </header>
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <button id="btn2" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal1">Создать</button>
+            </div>
+        </div>
+        <div class="row" is="dmx-repeat" id="repeat1" dmx-bind:repeat="sc_line.data.query">
+            <div class="col-6 col-md-auto col-lg-auto col-xl-auto col-xxl-auto">
+                <h5 class="mark text-center">Бук. линия</h5>
+                <h6>Зависимость: {{vid_sporta}}</h6>
+                <h6>Номер в системе:&nbsp; {{sorting}}</h6>
+                <h6>Наименование: {{line}}</h6>
+                <button id="btn3" class="btn btn-danger w-100" dmx-on:click="fr_del_line.submit()">Удалить</button>
+                <form is="dmx-serverconnect-form" id="fr_del_line" method="post" action="/api/laybrory/line/del_line" dmx-generator="bootstrap5" dmx-form-type="horizontal">
+                    <div class="form-group mb-3 row">
+                        <label for="inp_rft" class="col-sm-2 col-form-label">Rft</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inp_rft" name="rft" aria-describedby="inp_rft_help" placeholder="Enter Rft" dmx-bind:value="id">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<meta name="ac:route" content="/labrory/line">
+
+
 <div class="offcanvas offcanvas-start" id="meny" is="dmx-bs5-offcanvas" tabindex="-1">
     <div class="offcanvas-header">
         <h3 class="offcanvas-title">Меню раздела</h3>
@@ -33,6 +61,41 @@
     </div>
 </div><!-- Wappler include head-page="layouts/laubrory" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="labrory" appConnect="local" components="{dmxBootstrap5Navigation:{},dmxBootstrap5Offcanvas:{},dmxBrowser:{}}" -->
 <div is="dmx-browser" id="browser1"></div>
+<div class="modal" id="modal1" is="dmx-bs5-modal" tabindex="-1" nocloseonclick="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form is="dmx-serverconnect-form" id="fr_new_line" method="post" action="/api/laybrory/line/new_line" dmx-generator="bootstrap5" dmx-form-type="vertical">
+                    <div class="form-group mb-3">
+                        <label for="inp_vid_sporta">Vid sporta</label>
+                        <select id="inp_vid_sporta" class="form-select" name="vid_sporta" dmx-bind:options="sc_vid_sporta.data.query" optiontext="vid_sporta" optionvalue="vid_sporta_sis">
+                            <option selected="" value=""></option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="inp_line">Line</label>
+                        <input type="text" class="form-control" id="inp_line" name="line" aria-describedby="inp_line_help" placeholder="Enter Line">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="inp_sorting">Sorting</label>
+                        <input type="number" class="form-control" id="inp_sorting" name="sorting" aria-describedby="inp_sorting_help" placeholder="Enter Sorting">
+                    </div>
+                    <div class="form-group mb-3">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <meta name="ac:route" content="/labrory/labrory">

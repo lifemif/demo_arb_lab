@@ -1,0 +1,58 @@
+{
+  "meta": {
+    "$_POST": [
+      {
+        "type": "text",
+        "name": "edu"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "delete",
+      "module": "dbupdater",
+      "action": "delete",
+      "options": {
+        "connection": "db-arbik",
+        "sql": {
+          "type": "delete",
+          "table": "lib_strategi",
+          "wheres": {
+            "condition": "AND",
+            "rules": [
+              {
+                "id": "id",
+                "field": "id",
+                "type": "double",
+                "operator": "equal",
+                "value": "{{$_POST.edu}}",
+                "data": {
+                  "column": "id"
+                },
+                "operation": "="
+              }
+            ],
+            "conditional": null,
+            "valid": true
+          },
+          "returning": "id",
+          "query": "DELETE\nFROM lib_strategi\nWHERE id = :P1 /* {{$_POST.edu}} */",
+          "params": [
+            {
+              "operator": "equal",
+              "type": "expression",
+              "name": ":P1",
+              "value": "{{$_POST.edu}}"
+            }
+          ]
+        }
+      },
+      "meta": [
+        {
+          "name": "affected",
+          "type": "number"
+        }
+      ]
+    }
+  }
+}

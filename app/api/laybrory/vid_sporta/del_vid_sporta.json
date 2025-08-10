@@ -1,0 +1,58 @@
+{
+  "meta": {
+    "$_POST": [
+      {
+        "type": "text",
+        "name": "rde"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "delete",
+      "module": "dbupdater",
+      "action": "delete",
+      "options": {
+        "connection": "db-arbik",
+        "sql": {
+          "type": "delete",
+          "table": "lib_vid_sporta",
+          "wheres": {
+            "condition": "AND",
+            "rules": [
+              {
+                "id": "id",
+                "field": "id",
+                "type": "double",
+                "operator": "equal",
+                "value": "{{$_POST.rde}}",
+                "data": {
+                  "column": "id"
+                },
+                "operation": "="
+              }
+            ],
+            "conditional": null,
+            "valid": true
+          },
+          "returning": "id",
+          "query": "DELETE\nFROM lib_vid_sporta\nWHERE id = :P1 /* {{$_POST.rde}} */",
+          "params": [
+            {
+              "operator": "equal",
+              "type": "expression",
+              "name": ":P1",
+              "value": "{{$_POST.rde}}"
+            }
+          ]
+        }
+      },
+      "meta": [
+        {
+          "name": "affected",
+          "type": "number"
+        }
+      ]
+    }
+  }
+}

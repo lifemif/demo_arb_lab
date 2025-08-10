@@ -1,0 +1,121 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "query",
+      "module": "dbconnector",
+      "action": "select",
+      "options": {
+        "connection": "db-arbik",
+        "sql": {
+          "type": "SELECT",
+          "columns": [
+            {
+              "table": "lib_strategi",
+              "column": "id"
+            },
+            {
+              "table": "lib_strategi",
+              "column": "user_uuid"
+            },
+            {
+              "table": "lib_strategi",
+              "column": "strategi"
+            },
+            {
+              "table": "lib_strategi",
+              "column": "strategi_sis"
+            },
+            {
+              "table": "lib_strategi",
+              "column": "sorting"
+            }
+          ],
+          "table": {
+            "name": "lib_strategi"
+          },
+          "primary": "id",
+          "joins": [],
+          "wheres": {
+            "condition": "AND",
+            "rules": [
+              {
+                "id": "lib_strategi.user_uuid",
+                "field": "lib_strategi.user_uuid",
+                "type": "string",
+                "operator": "equal",
+                "value": "{{identity}}",
+                "data": {
+                  "table": "lib_strategi",
+                  "column": "user_uuid",
+                  "type": "text",
+                  "columnObj": {
+                    "type": "string",
+                    "maxLength": 255,
+                    "primary": false,
+                    "nullable": true,
+                    "name": "user_uuid"
+                  }
+                },
+                "operation": "="
+              }
+            ],
+            "conditional": null,
+            "valid": true
+          },
+          "orders": [
+            {
+              "table": "lib_strategi",
+              "column": "sorting",
+              "direction": "ASC"
+            }
+          ],
+          "query": "SELECT id, user_uuid, strategi, strategi_sis, sorting\nFROM lib_strategi\nWHERE user_uuid = :P1 /* {{identity}} */\nORDER BY sorting ASC",
+          "params": [
+            {
+              "operator": "equal",
+              "type": "expression",
+              "name": ":P1",
+              "value": "{{identity}}"
+            }
+          ]
+        }
+      },
+      "output": true,
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "text",
+          "name": "user_uuid"
+        },
+        {
+          "type": "text",
+          "name": "strategi"
+        },
+        {
+          "type": "text",
+          "name": "strategi_sis"
+        },
+        {
+          "type": "number",
+          "name": "sorting"
+        }
+      ],
+      "outputType": "array"
+    }
+  }
+}

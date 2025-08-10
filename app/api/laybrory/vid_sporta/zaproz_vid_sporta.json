@@ -1,0 +1,176 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "query",
+      "module": "dbconnector",
+      "action": "select",
+      "options": {
+        "connection": "db-arbik",
+        "sql": {
+          "type": "SELECT",
+          "columns": [
+            {
+              "table": "lib_vid_sporta",
+              "column": "id"
+            },
+            {
+              "table": "lib_vid_sporta",
+              "column": "user_uuid"
+            },
+            {
+              "table": "lib_vid_sporta",
+              "column": "vid_sporta"
+            },
+            {
+              "table": "lib_vid_sporta",
+              "column": "vid_sporta_sis"
+            },
+            {
+              "table": "lib_vid_sporta",
+              "column": "sorting"
+            },
+            {
+              "table": "line",
+              "column": "vid_sporta",
+              "alias": "counting",
+              "aggregate": "COUNT"
+            }
+          ],
+          "table": {
+            "name": "lib_vid_sporta"
+          },
+          "primary": "id",
+          "joins": [
+            {
+              "table": "lib_line",
+              "column": "*",
+              "alias": "line",
+              "type": "LEFT",
+              "clauses": {
+                "condition": "AND",
+                "rules": [
+                  {
+                    "table": "line",
+                    "column": "vid_sporta",
+                    "operator": "equal",
+                    "value": {
+                      "table": "lib_vid_sporta",
+                      "column": "vid_sporta"
+                    },
+                    "operation": "="
+                  }
+                ]
+              },
+              "primary": "id"
+            }
+          ],
+          "groupBy": [
+            {
+              "table": "lib_vid_sporta",
+              "column": "id"
+            },
+            {
+              "table": "lib_vid_sporta",
+              "column": "user_uuid"
+            },
+            {
+              "table": "lib_vid_sporta",
+              "column": "vid_sporta"
+            },
+            {
+              "table": "lib_vid_sporta",
+              "column": "vid_sporta_sis"
+            },
+            {
+              "table": "lib_vid_sporta",
+              "column": "sorting"
+            }
+          ],
+          "query": "SELECT lib_vid_sporta.id, lib_vid_sporta.user_uuid, lib_vid_sporta.vid_sporta, lib_vid_sporta.vid_sporta_sis, lib_vid_sporta.sorting, COUNT(line.vid_sporta) AS counting\nFROM lib_vid_sporta\nLEFT JOIN lib_line AS line ON (line.vid_sporta = lib_vid_sporta.vid_sporta)\nWHERE lib_vid_sporta.user_uuid = :P1 /* {{identity}} */\nGROUP BY lib_vid_sporta.id, lib_vid_sporta.user_uuid, lib_vid_sporta.vid_sporta, lib_vid_sporta.vid_sporta_sis, lib_vid_sporta.sorting\nORDER BY lib_vid_sporta.sorting ASC",
+          "params": [
+            {
+              "operator": "equal",
+              "type": "expression",
+              "name": ":P1",
+              "value": "{{identity}}"
+            }
+          ],
+          "wheres": {
+            "condition": "AND",
+            "rules": [
+              {
+                "id": "lib_vid_sporta.user_uuid",
+                "field": "lib_vid_sporta.user_uuid",
+                "type": "string",
+                "operator": "equal",
+                "value": "{{identity}}",
+                "data": {
+                  "table": "lib_vid_sporta",
+                  "column": "user_uuid",
+                  "type": "text",
+                  "columnObj": {
+                    "type": "string",
+                    "maxLength": 255,
+                    "primary": false,
+                    "nullable": true,
+                    "name": "user_uuid"
+                  }
+                },
+                "operation": "="
+              }
+            ],
+            "conditional": null,
+            "valid": true
+          },
+          "orders": [
+            {
+              "table": "lib_vid_sporta",
+              "column": "sorting",
+              "direction": "ASC"
+            }
+          ]
+        }
+      },
+      "output": true,
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "text",
+          "name": "user_uuid"
+        },
+        {
+          "type": "text",
+          "name": "vid_sporta"
+        },
+        {
+          "type": "text",
+          "name": "vid_sporta_sis"
+        },
+        {
+          "type": "number",
+          "name": "sorting"
+        },
+        {
+          "type": "text",
+          "name": "counting"
+        }
+      ],
+      "outputType": "array"
+    }
+  }
+}

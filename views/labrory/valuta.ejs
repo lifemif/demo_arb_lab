@@ -1,20 +1,50 @@
-<!-- Wappler include head-page="layouts/laubrory" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="valuta" appConnect="local" components="{dmxBrowser:{},dmxBootstrap5Offcanvas:{}}" -->
-<meta name="ac:route" content="/labrory/valuta">
+<dmx-serverconnect id="sc_valuta" url="/api/laybrory/valuta/get_valuta"></dmx-serverconnect>
 <header>
     <div class="container-fluid">
-        <div class="row">
+        <div class="row align-items-center">
             <div class="col">
                 <button id="btn1" class="btn" data-bs-toggle="offcanvas" data-bs-target="#meny">Меню</button>
             </div>
             <div class="col text-xxl-center">
-                <h5>Справочники</h5>
+                <h5 class="text-center">Валюты</h5>
             </div>
-            <div class="col text-end">
-                <button id="btn2" class="btn text-end">Скачать EXСEL</button>
+            <div class="col text-center align-self-center">
+                <p class="text-center">Количесво позиций: ({{sc_valuta.data.query.count()}})</p>
             </div>
         </div>
     </div>
-</header>
+</header><!-- Wappler include head-page="layouts/laubrory" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="valuta" appConnect="local" components="{dmxBrowser:{},dmxBootstrap5Offcanvas:{},dmxBootstrap5TableGenerator:{},dmxFormatter:{},dmxBootstrap5Modal:{}}" -->
+
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <button id="btn2" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal1">Создать</button>
+            </div>
+        </div>
+        <div class="row" is="dmx-repeat" id="repeat1" dmx-bind:repeat="sc_valuta.data.query">
+            <div class="col-6 col-lg-auto col-md-auto col-sm-auto">
+                <div class="d-block">
+                    <h6 class="text-center mark">Валюта</h6>
+                    <h6>Номер в системе: {{sector}}</h6>
+                    <h6>Название: {{name_valuta}}</h6>
+
+                    <form is="dmx-serverconnect-form" id="del_valuta" method="post" action="/api/laybrory/valuta/del_valuta" dmx-generator="bootstrap5" dmx-form-type="horizontal">
+                        <div class="form-group mb-3 row">
+                            <label for="inp_id" class="col-sm-2 col-form-label">Id</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="inp_id" name="id" aria-describedby="inp_id_help" placeholder="Enter Id" dmx-bind:value="id">
+                            </div>
+                        </div>
+                        <button id="btn3" class="btn btn-danger w-100" dmx-on:click="del_valuta.submit()">Удалить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<meta name="ac:route" content="/labrory/valuta">
+
 <div class="offcanvas offcanvas-start" id="meny" is="dmx-bs5-offcanvas" tabindex="-1">
     <div class="offcanvas-header">
         <h3 class="offcanvas-title">Меню раздела</h3>
@@ -32,6 +62,35 @@
     </div>
 </div><!-- Wappler include head-page="layouts/laubrory" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="labrory" appConnect="local" components="{dmxBootstrap5Navigation:{},dmxBootstrap5Offcanvas:{},dmxBrowser:{}}" -->
 <div is="dmx-browser" id="browser1"></div>
+<div class="modal" id="modal1" is="dmx-bs5-modal" tabindex="-1" nocloseonclick="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form is="dmx-serverconnect-form" id="fr_new_valuta" method="post" action="/api/laybrory/valuta/new_valuta" dmx-generator="bootstrap5" dmx-form-type="vertical">
+                    <div class="form-group mb-3">
+                        <label for="inp_name_valuta">Name valuta</label>
+                        <input type="text" class="form-control" id="inp_name_valuta" name="name_valuta" aria-describedby="inp_name_valuta_help" placeholder="Enter Name valuta">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="inp_sector">Sector</label>
+                        <input type="number" class="form-control" id="inp_sector" name="sector" aria-describedby="inp_sector_help" placeholder="Enter Sector">
+                    </div>
+                    <div class="form-group mb-3">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <meta name="ac:route" content="/labrory/labrory">

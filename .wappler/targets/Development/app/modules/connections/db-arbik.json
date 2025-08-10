@@ -9,7 +9,10 @@
       "port": 3306,
       "user": "root",
       "database": "arbik-master"
-    }
+    },
+    "meta": {}
   },
-  "fileName": "db-arbik.json"
+  "fileName": "db-arbik.json",
+  "actionFilePath": "file:///C:/Users/LiFE_MiF/Desktop/demo_arb_lab/app/modules/connections/db-arbik.json",
+  "serverType": "node"
 }

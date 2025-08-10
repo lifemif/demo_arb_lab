@@ -1,0 +1,58 @@
+{
+  "meta": {
+    "$_POST": [
+      {
+        "type": "text",
+        "name": "der"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "delete",
+      "module": "dbupdater",
+      "action": "delete",
+      "options": {
+        "connection": "db-arbik",
+        "sql": {
+          "type": "delete",
+          "table": "lib_vid_stavki",
+          "wheres": {
+            "condition": "AND",
+            "rules": [
+              {
+                "id": "id",
+                "field": "id",
+                "type": "double",
+                "operator": "equal",
+                "value": "{{$_POST.der}}",
+                "data": {
+                  "column": "id"
+                },
+                "operation": "="
+              }
+            ],
+            "conditional": null,
+            "valid": true
+          },
+          "returning": "id",
+          "query": "DELETE\nFROM lib_vid_stavki\nWHERE id = :P1 /* {{$_POST.der}} */",
+          "params": [
+            {
+              "operator": "equal",
+              "type": "expression",
+              "name": ":P1",
+              "value": "{{$_POST.der}}"
+            }
+          ]
+        }
+      },
+      "meta": [
+        {
+          "name": "affected",
+          "type": "number"
+        }
+      ]
+    }
+  }
+}

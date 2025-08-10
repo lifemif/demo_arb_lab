@@ -1,0 +1,122 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "query",
+      "module": "dbconnector",
+      "action": "select",
+      "options": {
+        "connection": "db-arbik",
+        "sql": {
+          "type": "SELECT",
+          "columns": [
+            {
+              "table": "lib_line",
+              "column": "id"
+            },
+            {
+              "table": "lib_line",
+              "column": "user_uuid"
+            },
+            {
+              "table": "lib_line",
+              "column": "vid_sporta"
+            },
+            {
+              "table": "lib_line",
+              "column": "line"
+            },
+            {
+              "table": "lib_line",
+              "column": "line_sis"
+            },
+            {
+              "table": "lib_line",
+              "column": "sorting"
+            }
+          ],
+          "table": {
+            "name": "lib_line"
+          },
+          "primary": "id",
+          "joins": [],
+          "wheres": {
+            "condition": "AND",
+            "rules": [
+              {
+                "id": "lib_line.user_uuid",
+                "field": "lib_line.user_uuid",
+                "type": "string",
+                "operator": "equal",
+                "value": "{{identity}}",
+                "data": {
+                  "table": "lib_line",
+                  "column": "user_uuid",
+                  "type": "text",
+                  "columnObj": {
+                    "type": "string",
+                    "maxLength": 255,
+                    "primary": false,
+                    "nullable": true,
+                    "name": "user_uuid"
+                  }
+                },
+                "operation": "="
+              }
+            ],
+            "conditional": null,
+            "valid": true
+          },
+          "query": "SELECT id, user_uuid, vid_sporta, line, line_sis, sorting\nFROM lib_line\nWHERE user_uuid = :P1 /* {{identity}} */",
+          "params": [
+            {
+              "operator": "equal",
+              "type": "expression",
+              "name": ":P1",
+              "value": "{{identity}}"
+            }
+          ]
+        }
+      },
+      "output": true,
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "text",
+          "name": "user_uuid"
+        },
+        {
+          "type": "text",
+          "name": "vid_sporta"
+        },
+        {
+          "type": "text",
+          "name": "line"
+        },
+        {
+          "type": "text",
+          "name": "line_sis"
+        },
+        {
+          "type": "number",
+          "name": "sorting"
+        }
+      ],
+      "outputType": "array"
+    }
+  }
+}

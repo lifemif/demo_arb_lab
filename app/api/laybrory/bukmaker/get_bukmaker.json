@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "query",
+      "module": "dbconnector",
+      "action": "select",
+      "options": {
+        "connection": "db-arbik",
+        "sql": {
+          "type": "SELECT",
+          "columns": [
+            {
+              "table": "lib_bukmaker",
+              "column": "id"
+            },
+            {
+              "table": "lib_bukmaker",
+              "column": "user_UUID"
+            },
+            {
+              "table": "lib_bukmaker",
+              "column": "bukmaker"
+            },
+            {
+              "table": "lib_bukmaker",
+              "column": "bukmaker_sis"
+            },
+            {
+              "table": "lib_bukmaker",
+              "column": "valuta"
+            },
+            {
+              "table": "lib_bukmaker",
+              "column": "sorting"
+            }
+          ],
+          "table": {
+            "name": "lib_bukmaker"
+          },
+          "primary": "id",
+          "joins": [],
+          "wheres": {
+            "condition": "AND",
+            "rules": [
+              {
+                "id": "lib_bukmaker.user_UUID",
+                "field": "lib_bukmaker.user_UUID",
+                "type": "string",
+                "operator": "equal",
+                "value": "{{identity}}",
+                "data": {
+                  "table": "lib_bukmaker",
+                  "column": "user_UUID",
+                  "type": "text",
+                  "columnObj": {
+                    "type": "string",
+                    "maxLength": 255,
+                    "primary": false,
+                    "nullable": false,
+                    "name": "user_UUID"
+                  }
+                },
+                "operation": "="
+              }
+            ],
+            "conditional": null,
+            "valid": true
+          },
+          "orders": [
+            {
+              "table": "lib_bukmaker",
+              "column": "sorting",
+              "direction": "ASC"
+            }
+          ],
+          "query": "SELECT id, user_UUID, bukmaker, bukmaker_sis, valuta, sorting\nFROM lib_bukmaker\nWHERE user_UUID = :P1 /* {{identity}} */\nORDER BY sorting ASC",
+          "params": [
+            {
+              "operator": "equal",
+              "type": "expression",
+              "name": ":P1",
+              "value": "{{identity}}"
+            }
+          ]
+        }
+      },
+      "output": true,
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "text",
+          "name": "user_UUID"
+        },
+        {
+          "type": "text",
+          "name": "bukmaker"
+        },
+        {
+          "type": "text",
+          "name": "bukmaker_sis"
+        },
+        {
+          "type": "text",
+          "name": "valuta"
+        },
+        {
+          "type": "number",
+          "name": "sorting"
+        }
+      ],
+      "outputType": "array"
+    }
+  }
+}

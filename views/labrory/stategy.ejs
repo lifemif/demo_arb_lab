@@ -1,5 +1,4 @@
-<!-- Wappler include head-page="layouts/laubrory" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="stategy" appConnect="local" components="{dmxBrowser:{},dmxBootstrap5Offcanvas:{}}" -->
-<meta name="ac:route" content="/labrory/stategy">
+<dmx-serverconnect id="sc_strategy" url="/api/laybrory/srategy/get_strategy"></dmx-serverconnect>
 <header>
     <div class="container-fluid">
         <div class="row">
@@ -9,12 +8,45 @@
             <div class="col text-xxl-center">
                 <h5>Стратегии</h5>
             </div>
-            <div class="col text-end">
-                <button id="btn2" class="btn text-end">Скачать EXСEL</button>
+            <div class="col text-center">
+                <p>Количество позиций: ({{sc_strategy.data.query.count()}})</p>
             </div>
         </div>
     </div>
-</header>
+</header><!-- Wappler include head-page="layouts/laubrory" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="stategy" appConnect="local" components="{dmxBrowser:{},dmxBootstrap5Offcanvas:{},dmxFormatter:{},dmxBootstrap5Modal:{}}" -->
+
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col col-xxl">
+                <button id="btn2" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal1">Создать</button>
+            </div>
+        </div>
+        <div class="row" is="dmx-repeat" id="repeat1" dmx-bind:repeat="sc_strategy.data.query">
+            <div class="col-6 col-md-auto col-lg-auto col-xl-auto col-xxl-auto">
+                <div class="d-block">
+                    <h5 class="text-center mark">Стратегия</h5>
+                    <h6>Номер в системе: {{sorting}}</h6>
+                    <h6>Наименование: {{strategi}}</h6>
+                    <button id="btn3" class="btn btn-danger w-100" dmx-on:click="fr_del_strategy.submit()">Удалить</button>
+                    <form is="dmx-serverconnect-form" id="fr_del_strategy" method="post" action="/api/laybrory/srategy/del_strategy" dmx-generator="bootstrap5" dmx-form-type="horizontal">
+                        <div class="form-group mb-3 row">
+                            <label for="inp_edu" class="col-sm-2 col-form-label">Edu</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="inp_edu" name="edu" aria-describedby="inp_edu_help" placeholder="Enter Edu" dmx-bind:value="id">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</section>
+<meta name="ac:route" content="/labrory/stategy">
+
 <div class="offcanvas offcanvas-start" id="meny" is="dmx-bs5-offcanvas" tabindex="-1">
     <div class="offcanvas-header">
         <h3 class="offcanvas-title">Меню раздела</h3>
@@ -32,6 +64,35 @@
     </div>
 </div><!-- Wappler include head-page="layouts/laubrory" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="labrory" appConnect="local" components="{dmxBootstrap5Navigation:{},dmxBootstrap5Offcanvas:{},dmxBrowser:{}}" -->
 <div is="dmx-browser" id="browser1"></div>
+<div class="modal" id="modal1" is="dmx-bs5-modal" tabindex="-1" nocloseonclick="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form is="dmx-serverconnect-form" id="fr_strategy" method="post" action="/api/laybrory/srategy/new_strategy" dmx-generator="bootstrap5" dmx-form-type="vertical">
+                    <div class="form-group mb-3">
+                        <label for="inp_strategi">Strategi</label>
+                        <input type="text" class="form-control" id="inp_strategi" name="strategi" aria-describedby="inp_strategi_help" placeholder="Enter Strategi">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="inp_sorting">Sorting</label>
+                        <input type="number" class="form-control" id="inp_sorting" name="sorting" aria-describedby="inp_sorting_help" placeholder="Enter Sorting">
+                    </div>
+                    <div class="form-group mb-3">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <meta name="ac:route" content="/labrory/labrory">
